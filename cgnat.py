@@ -212,8 +212,8 @@ def main():
 
     print('external hosts count:', external_count)
     print('external hosts list:', external_hosts)
-    print('internal ports count', internal_count)
-    print('internal hosts list', internal_hosts)
+    print('internal hosts count:', internal_count)
+    print('internal hosts list:', internal_hosts)
     print('global port range:', global_port_range)
     print('ports per host count:', ports_per_user)
     print('---')
