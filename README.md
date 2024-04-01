@@ -1,6 +1,14 @@
 # nftables-cgnat
 CGNAT rules for nftables
 
+Change `external_prefix`, `internal_prefix`, `ports_per_user` in the `main()` function
+For example:
+```none
+    external_prefix = "192.0.2.0/30"
+    internal_prefix = "100.64.0.0/28"
+    ports_per_user = 8000
+```
+
 Example of usage:
 ```none
 $ python3 cgnat.py
