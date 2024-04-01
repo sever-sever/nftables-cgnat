@@ -38,7 +38,7 @@ class NftablesOperations:
 
     def add_chain(self):
         execute_command(
-            f'sudo nft add chain ip {self.table_name} {self.chain_name} {{ type filter hook {self.hook} priority {self.priority} \; policy accept \; }}'
+            f'sudo nft add chain ip {self.table_name} {self.chain_name} {{ type nat hook {self.hook} priority {self.priority} \; policy accept \; }}'
         )
 
     def add_batch_rule(self, rule: str):

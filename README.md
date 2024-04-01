@@ -13,7 +13,7 @@ Example of usage:
 ```none
 $ python3 cgnat.py
 sudo nft add table ip cgnat
-sudo nft add chain ip cgnat POSTROUTING { type filter hook postrouting priority 100 \; policy accept \; }
+sudo nft add chain ip cgnat POSTROUTING { type nat hook postrouting priority 100 \; policy accept \; }
 ---
 external hosts count: 4
 external hosts list: ['192.0.2.0', '192.0.2.1', '192.0.2.2', '192.0.2.3']
