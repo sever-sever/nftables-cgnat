@@ -6,9 +6,10 @@ Author: Viacheslav Hletenko
 Date: 2024
 Description:
 Generate nftables rules for CGNAT
-Change external_prefix/internal_prefix/ports_per_user in the main()
+Change external_prefix, internal_prefix and ports_per_user in the main()
 
 Usage: python3 cgnat.py
+       sudo nft -f cgnat.nft
 """
 import ipaddress
 
@@ -193,14 +194,15 @@ def generate_port_rules(
 
 def main():
     nft = NftablesOperations()
-    nft.add_table()
-    nft.add_chain()
+    # nft.add_table()
+    # nft.add_chain()
     print('---')
     # Change the values to required values
     external_prefix = "192.0.2.0/30"
     internal_prefix = "100.64.0.0/28"
     ports_per_user = 8000
     global_port_range = "1024-65535"
+    output_filename = 'cgnat.nft'
     # Not implemented, use ports_per_user
     # tcp_ports = 1024
     # udp_ports = 1024
@@ -211,9 +213,9 @@ def main():
     internal_hosts = IPOperations(internal_prefix).convert_prefix_to_list_ips()
 
     print('external hosts count:', external_count)
-    print('external hosts list:', external_hosts)
-    print('internal hosts count:', internal_count)
-    print('internal hosts list:', internal_hosts)
+    # print('external hosts list:', external_hosts)
+    print('internal hosts count', internal_count)
+    # print('internal hosts list', internal_hosts)
     print('global port range:', global_port_range)
     print('ports per host count:', ports_per_user)
     print('---')
@@ -224,7 +226,10 @@ def main():
         )
         for rule in rules:
             nft.add_batch_rule(rule)
-        print(nft.generate_batch_file())
+        # print(nft.generate_batch_file())
+        with open(output_filename, 'w') as file:
+            file.write(nft.generate_batch_file())
+        print(f'To apply rules use: nft -f {output_filename}\n')
     except ValueError as e:
         print(e)
 
