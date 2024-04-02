@@ -1,0 +1,68 @@
+#!/usr/sbin/nft -f
+
+add table ip cgnat
+flush table ip cgnat
+table ip cgnat {
+        flowtable f {
+                hook ingress priority filter
+                devices = { eth0, eth1 }
+        }
+
+        chain y {
+                type filter hook forward priority filter; policy accept;
+                ip protocol tcp flow add @f
+                counter
+        }
+
+        chain POSTROUTING {
+                type nat hook postrouting priority srcnat - 10; policy accept;
+                meta l4proto tcp ip saddr 100.64.0.0 counter snat to 192.168.122.222:1024-3023
+                meta l4proto udp ip saddr 100.64.0.0 counter snat to 192.168.122.222:1024-3023
+                ip saddr 100.64.0.0 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.1 counter snat to 192.168.122.222:3024-5023
+                meta l4proto udp ip saddr 100.64.0.1 counter snat to 192.168.122.222:3024-5023
+                ip saddr 100.64.0.1 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.2 counter snat to 192.168.122.222:5024-7023
+                meta l4proto udp ip saddr 100.64.0.2 counter snat to 192.168.122.222:5024-7023
+                ip saddr 100.64.0.2 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.3 counter snat to 192.168.122.222:7024-9023
+                meta l4proto udp ip saddr 100.64.0.3 counter snat to 192.168.122.222:7024-9023
+                ip saddr 100.64.0.3 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.4 counter snat to 192.168.122.222:9024-11023
+                meta l4proto udp ip saddr 100.64.0.4 counter snat to 192.168.122.222:9024-11023
+                ip saddr 100.64.0.4 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.5 counter snat to 192.168.122.222:11024-13023
+                meta l4proto udp ip saddr 100.64.0.5 counter snat to 192.168.122.222:11024-13023
+                ip saddr 100.64.0.5 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.6 counter snat to 192.168.122.222:13024-15023
+                meta l4proto udp ip saddr 100.64.0.6 counter snat to 192.168.122.222:13024-15023
+                ip saddr 100.64.0.6 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.7 counter snat to 192.168.122.222:15024-17023
+                meta l4proto udp ip saddr 100.64.0.7 counter snat to 192.168.122.222:15024-17023
+                ip saddr 100.64.0.7 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.8 counter snat to 192.168.122.222:17024-19023
+                meta l4proto udp ip saddr 100.64.0.8 counter snat to 192.168.122.222:17024-19023
+                ip saddr 100.64.0.8 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.9 counter snat to 192.168.122.222:19024-21023
+                meta l4proto udp ip saddr 100.64.0.9 counter snat to 192.168.122.222:19024-21023
+                ip saddr 100.64.0.9 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.10 counter snat to 192.168.122.222:21024-23023
+                meta l4proto udp ip saddr 100.64.0.10 counter snat to 192.168.122.222:21024-23023
+                ip saddr 100.64.0.10 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.11 counter snat to 192.168.122.222:23024-25023
+                meta l4proto udp ip saddr 100.64.0.11 counter snat to 192.168.122.222:23024-25023
+                ip saddr 100.64.0.11 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.12 counter snat to 192.168.122.222:25024-27023
+                meta l4proto udp ip saddr 100.64.0.12 counter snat to 192.168.122.222:25024-27023
+                ip saddr 100.64.0.12 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.13 counter snat to 192.168.122.222:27024-29023
+                meta l4proto udp ip saddr 100.64.0.13 counter snat to 192.168.122.222:27024-29023
+                ip saddr 100.64.0.13 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.14 counter snat to 192.168.122.222:29024-31023
+                meta l4proto udp ip saddr 100.64.0.14 counter snat to 192.168.122.222:29024-31023
+                ip saddr 100.64.0.14 counter snat to 192.168.122.222
+                meta l4proto tcp ip saddr 100.64.0.15 counter snat to 192.168.122.222:31024-33023
+                meta l4proto udp ip saddr 100.64.0.15 counter snat to 192.168.122.222:31024-33023
+                ip saddr 100.64.0.15 counter snat to 192.168.122.222
+        }
+}

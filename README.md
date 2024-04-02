@@ -2,7 +2,10 @@
 CGNAT rules for nftables
 The script generates nft CGNAT rules and save them to the file `cgnat.nft` in the local directory.
 
-Change `external_prefix`, `internal_prefix`, `ports_per_user` in the `main()` function
+Change options:
+`external_prefix` - prefix or range of IP addresses
+`internal_prefix` - prefix
+`ports_per_user` - `int` in the `main()` function
 For example:
 ```none
     external_prefix = "192.0.2.0/30"
