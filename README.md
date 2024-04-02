@@ -1,5 +1,6 @@
 # nftables-cgnat
 CGNAT rules for nftables
+The script generates nft CGNAT rules and save them to the file `cgnat.nft` in the local directory.
 
 Change `external_prefix`, `internal_prefix`, `ports_per_user` in the `main()` function
 For example:
@@ -7,21 +8,24 @@ For example:
     external_prefix = "192.0.2.0/30"
     internal_prefix = "100.64.0.0/28"
     ports_per_user = 8000
+    global_port_range = "1024-65535"
 ```
 
 Example of usage:
 ```none
 $ python3 cgnat.py
-sudo nft add table ip cgnat
-sudo nft add chain ip cgnat POSTROUTING { type nat hook postrouting priority 100 \; policy accept \; }
 ---
 external hosts count: 4
-external hosts list: ['192.0.2.0', '192.0.2.1', '192.0.2.2', '192.0.2.3']
-internal hosts count: 16
-internal hosts list: ['100.64.0.0', '100.64.0.1', '100.64.0.2', '100.64.0.3', '100.64.0.4', '100.64.0.5', '100.64.0.6', '100.64.0.7', '100.64.0.8', '100.64.0.9', '100.64.0.10', '100.64.0.11', '100.64.0.12', '100.64.0.13', '100.64.0.14', '100.64.0.15']
+internal hosts count 16
 global port range: 1024-65535
 ports per host count: 8000
 ---
+To apply rules use: nft -f cgnat.nft
+
+```
+Check the generated file:
+```none
+$ cat cgnat.nft
 #!/usr/sbin/nft -f
 
 add table ip cgnat
@@ -80,4 +84,11 @@ table ip cgnat {
     }
 }
 
+```
+
+Check and apply rules:
+```none
+$ sudo nft -c -f cgnat.nft
+$ sudo nft -f cgnat.nft
+$ sudo nft list table ip cgnat
 ```
