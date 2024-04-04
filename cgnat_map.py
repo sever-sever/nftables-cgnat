@@ -19,14 +19,14 @@ BATCH_FILE_MAP_TEMPLATE = '''\
 add table ip {table_name}
 flush table ip {table_name}
 
-add map ip cgnat tcp_nat_map {{ type ipv4_addr: interval ipv4_addr . inet_service ; flags interval ;}}
-add map ip cgnat udp_nat_map {{ type ipv4_addr: interval ipv4_addr . inet_service ; flags interval ;}}
-add map ip cgnat icmp_nat_map {{ type ipv4_addr: interval ipv4_addr . inet_service ; flags interval ;}}
-add map ip cgnat other_nat_map {{ type ipv4_addr: interval ipv4_addr ; flags interval ;}}
-flush map ip cgnat tcp_nat_map
-flush map ip cgnat udp_nat_map
-flush map ip cgnat icmp_nat_map
-flush map ip cgnat other_nat_map
+add map ip {table_name} tcp_nat_map {{ type ipv4_addr: interval ipv4_addr . inet_service ; flags interval ;}}
+add map ip {table_name} udp_nat_map {{ type ipv4_addr: interval ipv4_addr . inet_service ; flags interval ;}}
+add map ip {table_name} icmp_nat_map {{ type ipv4_addr: interval ipv4_addr . inet_service ; flags interval ;}}
+add map ip {table_name} other_nat_map {{ type ipv4_addr: interval ipv4_addr ; flags interval ;}}
+flush map ip {table_name} tcp_nat_map
+flush map ip {table_name} udp_nat_map
+flush map ip {table_name} icmp_nat_map
+flush map ip {table_name} other_nat_map
 
 table ip {table_name} {{
     map tcp_nat_map {{
@@ -63,6 +63,7 @@ table ip {table_name} {{
 }}
 
 '''
+
 
 def execute_command(command):
     """PoC print only"""
@@ -245,7 +246,9 @@ def generate_port_rules(
         ):
             raise ValueError("Not enough ports available for the specified parameters")
 
-        proto_map_elements.append(f'{internal_host} : {external_host} . {current_port}-{next_end_port}')
+        proto_map_elements.append(
+            f'{internal_host} : {external_host} . {current_port}-{next_end_port}'
+        )
         other_map_elements.append(f'{internal_host} : {external_host}')
 
         current_port = next_end_port + 1
@@ -301,4 +304,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
