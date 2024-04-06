@@ -14,7 +14,7 @@ For example:
     global_port_range = "1024-65535"
 ```
 
-# Example:
+### Example without maps:
 ```none
 $ python3 cgnat.py
 ---
@@ -95,7 +95,7 @@ $ sudo nft -c -f cgnat.nft
 $ sudo nft -f cgnat.nft
 $ sudo nft list table ip cgnat
 ```
-# Example with maps
+### Example with maps
 ```
 $ ./cgnat_map.py
 sudo nft add table ip cgnat
@@ -109,7 +109,7 @@ ports per host count: 8000
 To apply rules use: nft -f cgnat.nft
 
 
-sever@sever:~/scripts/repos/nftables-cgnat$ cat cgnat.nft 
+$ cat cgnat.nft 
 #!/usr/sbin/nft -f
 
 add table ip cgnat
