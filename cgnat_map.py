@@ -267,10 +267,9 @@ def main():
 
     # Change the values to required values
     # external_prefix = "192.0.2.2-192.0.2.5"
-    # external_prefix = "192.0.2.0/30"
-    external_prefix: str = '192.168.122.222/32'
+    external_prefix = "192.0.2.0/30"
     internal_prefix: str = '100.64.0.0/28'
-    ports_per_user: int = 2000
+    ports_per_user: int = 8000
     global_port_range: str = '1024-65535'
     output_filename: str = 'cgnat.nft'
 
